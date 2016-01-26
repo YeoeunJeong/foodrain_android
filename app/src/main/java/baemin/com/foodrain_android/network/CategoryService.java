@@ -12,6 +12,6 @@ import retrofit2.http.Query;
  * Created by elite on 16. 1. 25..
  */
 public interface CategoryService {
-    @GET("/categorycodes.json")
+    @GET("categorycodes.json")
     Call<List<Category>> getCategories();
 }

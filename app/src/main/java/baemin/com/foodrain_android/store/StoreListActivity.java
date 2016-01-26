@@ -1,16 +1,24 @@
 package baemin.com.foodrain_android.store;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+
+import java.util.List;
 
 import baemin.com.foodrain_android.R;
+import baemin.com.foodrain_android.util.Constants;
+import baemin.com.foodrain_android.vo.Category;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class StoreListActivity extends AppCompatActivity {
     @Bind(R.id.store_list_viewpager)
-    ViewPager viewPager;
+    ViewPager mViewPager;
+    @Bind(R.id.store_list_tablayout)
+    SlidingTabLayout mSlidingTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +26,14 @@ public class StoreListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store_list);
         ButterKnife.bind(this);
 
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        Intent intent = getIntent();
+        List<Category> mCategories = (List) intent.getBundleExtra(Constants.CATEGORY_BUNDLE).getSerializable(Constants.CATEGORY_SERIALIZABLE);
+        Log.i("categorytest", mCategories.get(1).getName());
+
+        mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), mCategories));
+        mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setViewPager(mViewPager);
+
+
     }
 }
