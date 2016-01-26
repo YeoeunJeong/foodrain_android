@@ -76,19 +76,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         mCategories = new ArrayList<>();
 //        addDumpData();
-        // getCategoryList();
-        testJson();
+        getCategoryList();
+//        testJson();
 
-        categoryGridView.setAdapter(new FRGridAdapter(MainActivity.this, mCategories));
-        categoryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, StoreListActivity.class);
-                Log.i(Constants.CATEGORY_ID, mCategories.get(position).getId() + "");
-                intent.putExtra(Constants.CATEGORY_ID, String.valueOf(mCategories.get(position).getId()));
-                startActivity(intent);
-            }
-        });
+
     }
 
     private void testJson() {
@@ -102,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
             String result = "";
-            for (int i = 0; i < jsonArray.length(); i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject cate = jsonArray.getJSONObject(i);
                 mCategories.add(new Category(Integer.parseInt(cate.getString("id")), cate.getString("name")));
             }
@@ -115,17 +106,28 @@ public class MainActivity extends AppCompatActivity
     private void getCategoryList() {
         mCategories.clear();
         CategoryService categoryService = ServiceGenerator.getInstance().getCategories();
-        Call<List<Category>> categoryListCall;
-        Log.i("test1", "here");
-        categoryListCall = categoryService.getCategories();
+
+        Call<List<Category>> categoryListCall = categoryService.getCategories();
         categoryListCall.enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Response<List<Category>> response) {
                 mCategories = response.body();
-                for (Category category : mCategories) {
-                    Log.i("test2", category.getName());
-//                    mCategories.add(category);
-                }
+
+                categoryGridView.setAdapter(new FRGridAdapter(MainActivity.this, mCategories));
+                categoryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(MainActivity.this, StoreListActivity.class);
+                        Log.i(Constants.CATEGORY_ID, mCategories.get(position).getId() + "");
+                        ArrayList<Category> arrayList = (ArrayList) mCategories;
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constants.CATEGORY_SERIALIZABLE, arrayList);
+                        intent.putExtra(Constants.CATEGORY_BUNDLE, bundle);
+                        intent.putExtra(Constants.CATEGORY_ID, String.valueOf(mCategories.get(position).getId()));
+
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
@@ -133,9 +135,7 @@ public class MainActivity extends AppCompatActivity
                 Log.i("test3", t.getMessage());
             }
         });
-
     }
-
 
     private void addDumpData() {
         mCategories.clear();
@@ -164,16 +164,11 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
         if (id == R.id.nav_favorites) {
-
         } else if (id == R.id.nav_notice) {
-
         } else if (id == R.id.nav_reviews) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -184,21 +179,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
