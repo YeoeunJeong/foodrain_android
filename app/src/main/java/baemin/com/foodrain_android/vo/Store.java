@@ -1,6 +1,6 @@
 package baemin.com.foodrain_android.vo;
 
-public class Shop {
+public class Store {
 
     /*
     [{"id":1,
