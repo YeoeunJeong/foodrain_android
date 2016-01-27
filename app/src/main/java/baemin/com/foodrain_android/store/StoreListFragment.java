@@ -1,54 +1,89 @@
 package baemin.com.foodrain_android.store;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import java.util.Random;
+import java.util.List;
 
 import baemin.com.foodrain_android.R;
+import baemin.com.foodrain_android.network.ServiceGenerator;
+import baemin.com.foodrain_android.network.StoreService;
+import baemin.com.foodrain_android.vo.Store;
+import baemin.com.foodrain_android.vo.Stores;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class StoreListFragment extends Fragment {
-    Activity activity;
+    private Activity mActivity;
+    private List<Store> mStoreList;
+    private Stores mStores;
+    private int categoryId;
 
-    @OnClick(R.id.fragment_btn)
-    public void onClick(View v) {
-        Toast.makeText(activity, "test", Toast.LENGTH_SHORT).show();
-    }
+    @Bind(R.id.store_list_listview)
+    ListView listView;
 
-    private static int total = 0;
-    private int mColor;
-    private Random mRandom = new Random(System.currentTimeMillis());
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle args = new Bundle();
-        if (args != null) {
-            mColor = mRandom.nextInt(0xffffff) | 0xff000000;
-        }
+    public StoreListFragment(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_store_list, container, false);
         ButterKnife.bind(this, view);
-        view.setBackgroundColor(mColor);
-        Log.i("Fragment", "this is fragment");
-        activity = getActivity();
 
+        mActivity = getActivity();
+
+        getStoreList();
         return view;
+    }
+
+    private void getStoreList() {
+        StoreService storeService = ServiceGenerator.getInstance().getStores();
+
+        Intent intent = mActivity.getIntent();
+
+        // page, categoryId, regionId, longitude, latitude
+        Call<Stores> storeListCall = storeService.getStores(categoryId);
+        storeListCall.enqueue(mCallBack);
+    }
+
+    private Callback<Stores> mCallBack = new Callback<Stores>() {
+        @Override
+        public void onResponse(Response<Stores> response) {
+            mStores = response.body();
+            mStoreList = mStores.getRows();
+
+            listView.setAdapter(new StoreListViewAdapter(mActivity, mStoreList));
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(mActivity, StoreDetailActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+
+        }
+    };
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ButterKnife.unbind(this);
     }
 }

@@ -26,33 +26,13 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         int i = 0;
         for (Category category : categories) {
-            tabTitles[i++] = category.getName();
-        }
-        for (i = 0; i < categories.size(); i++) {
-            fragment[i] = new StoreListFragment();
+            tabTitles[i] = category.getName();
+            fragment[i++] = new StoreListFragment(category.getId());
         }
     }
 
     @Override
     public Fragment getItem(int position) {
-
-
-//        switch (position) {
-//            case 0:
-//                fragment = new StoreListFragment();
-//                Log.i("Fragment test", "position is " + position);
-//                break;
-//            case 1:
-//                fragment = new StoreListFragment();
-//                Log.i("Fragment test", "position is " + position);
-//                break;
-//            case 2:
-//                fragment = new StoreListFragment();
-//                Log.i("Fragment test", "position is " + position);
-//                break;
-//            default:
-//                break;
-//        }
         return fragment[position];
     }
 

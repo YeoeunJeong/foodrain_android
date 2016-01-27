@@ -2,32 +2,30 @@ package baemin.com.foodrain_android.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.List;
 
 public abstract class FRBaseAdapter<T> extends BaseAdapter {
 
-    protected Context mContext;
-    protected LayoutInflater mInflater;
-    protected List<T> mList;
+    protected Context context;
+    protected LayoutInflater inflater;
+    protected List<T> list;
 
     public FRBaseAdapter(Context context, List<T> tList) {
-        this.mContext = context;
-        this.mInflater = LayoutInflater.from(context);
-        this.mList = tList;
+        this.context = context;
+        this.inflater = LayoutInflater.from(context);
+        this.list = tList;
     }
 
     @Override
     public int getCount() {
-        return mList.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mList.get(position);
+        return list.get(position);
     }
 
     @Override

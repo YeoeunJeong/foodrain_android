@@ -17,14 +17,7 @@ public class ServiceGenerator {
         return instance;
     }
 
-    //    public SalesStocksService getSalesStocksService() {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(IP_ADDR)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        return retrofit.create(SalesStocksService.class);
-//    }
-    public <T> T createService(Class<T> serviceClass) {
+    private <T> T createService(Class<T> serviceClass) {
         return new Retrofit.Builder()
                 .baseUrl(Constants.LOCAL_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -34,5 +27,13 @@ public class ServiceGenerator {
 
     public CategoryService getCategories() {
         return createService(CategoryService.class);
+    }
+
+    public StoreService getStores() {
+        return createService(StoreService.class);
+    }
+
+    public RegionService getRegions() {
+        return createService(RegionService.class);
     }
 }
