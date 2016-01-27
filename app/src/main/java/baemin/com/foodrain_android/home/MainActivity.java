@@ -2,7 +2,6 @@ package baemin.com.foodrain_android.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,10 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.GridView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +22,13 @@ import java.util.List;
 import baemin.com.foodrain_android.R;
 import baemin.com.foodrain_android.network.CategoryService;
 import baemin.com.foodrain_android.network.ServiceGenerator;
+import baemin.com.foodrain_android.setting.RegionSettingActivity;
 import baemin.com.foodrain_android.store.StoreListActivity;
 import baemin.com.foodrain_android.util.Constants;
+import baemin.com.foodrain_android.util.SharedPreference;
 import baemin.com.foodrain_android.vo.Category;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,30 +36,30 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Intent intent;
-    List<Category> mCategories;
+    private Intent intent;
+    private List<Category> mCategories;
 
-    @Bind(R.id.toolbar)
+    @Bind(R.id.main_toolbar)
     Toolbar toolbar;
+
     @Bind(R.id.main_layout_content)
     View contentLayout;
+
     @Bind(R.id.content_main_gv_category)
     GridView categoryGridView;
+
     @Bind(R.id.drawer_layout)
     DrawerLayout drawer;
+
     @Bind(R.id.nav_view)
     NavigationView navigationView;
 
-    @OnClick(R.id.fab)
-    void fabOnClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
+    @Bind(R.id.main_test_in_content_main_xml)
+    TextView regionTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -72,84 +69,53 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
         navigationView.setNavigationItemSelectedListener(this);
-        mCategories = new ArrayList<>();
-//        addDumpData();
         getCategoryList();
-//        testJson();
-
-
     }
 
-    private void testJson() {
-        mCategories.clear();
-        String jsonString = "[{\"id\":1, \"name\": \"치킨\" }," +
-                "{\"id\":2, \"name\":\"중국집\"}," +
-                "{\"id\":3, \"name\":\"피자\"}," +
-                "{\"id\":4, \"name\":\"족발/보쌈\"}]";
-        mCategories = new ArrayList<>();
-
-        try {
-            JSONArray jsonArray = new JSONArray(jsonString);
-            String result = "";
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject cate = jsonArray.getJSONObject(i);
-                mCategories.add(new Category(Integer.parseInt(cate.getString("id")), cate.getString("name")));
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String regionName = SharedPreference.getInstance(MainActivity.this).getRegion();
+        if (regionName != null) {
+            regionTv.setText(regionName);
         }
     }
 
     private void getCategoryList() {
-        mCategories.clear();
         CategoryService categoryService = ServiceGenerator.getInstance().getCategories();
 
         Call<List<Category>> categoryListCall = categoryService.getCategories();
-        categoryListCall.enqueue(new Callback<List<Category>>() {
-            @Override
-            public void onResponse(Response<List<Category>> response) {
-                mCategories = response.body();
-
-                categoryGridView.setAdapter(new FRGridAdapter(MainActivity.this, mCategories));
-                categoryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(MainActivity.this, StoreListActivity.class);
-                        Log.i(Constants.CATEGORY_ID, mCategories.get(position).getId() + "");
-                        ArrayList<Category> arrayList = (ArrayList) mCategories;
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(Constants.CATEGORY_SERIALIZABLE, arrayList);
-                        intent.putExtra(Constants.CATEGORY_BUNDLE, bundle);
-                        intent.putExtra(Constants.CATEGORY_ID, String.valueOf(mCategories.get(position).getId()));
-
-                        startActivity(intent);
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.i("test3", t.getMessage());
-            }
-        });
+        categoryListCall.enqueue(mCallback);
     }
 
-    private void addDumpData() {
-        mCategories.clear();
-        mCategories.add(new Category(1, "치킨"));
-        mCategories.add(new Category(2, "중국"));
-        mCategories.add(new Category(3, "피자"));
-        mCategories.add(new Category(4, "족발/보쌈"));
-        mCategories.add(new Category(5, "한식/분식"));
-        mCategories.add(new Category(6, "일식"));
-        mCategories.add(new Category(7, "야식"));
-        mCategories.add(new Category(8, "배민라이더스"));
-        mCategories.add(new Category(9, "결제"));
-        mCategories.add(new Category(10, "점심시가안"));
-    }
+    private Callback<List<Category>> mCallback = new Callback<List<Category>>() {
+        @Override
+        public void onResponse(Response<List<Category>> response) {
+            mCategories = response.body();
+
+            categoryGridView.setAdapter(new CategoryGridAdapter(MainActivity.this, mCategories));
+            categoryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(MainActivity.this, StoreListActivity.class);
+                    ArrayList<Category> arrayList = (ArrayList) mCategories;
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constants.CATEGORY_SERIALIZABLE, arrayList);
+                    intent.putExtra(Constants.CATEGORY_BUNDLE, bundle);
+                    intent.putExtra(Constants.CATEGORY_SELECTED_POSITION, String.valueOf(position));
+                    intent.putExtra(Constants.CATEGORY_ID, String.valueOf(mCategories.get(position).getId()));
+
+                    startActivity(intent);
+                }
+            });
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            Log.i("test3", t.getMessage());
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -186,8 +152,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        if (id == R.id.action_location_icon) {
+            Intent intent = new Intent(MainActivity.this, RegionSettingActivity.class);
+            startActivity(intent);
 
-        if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -198,5 +166,4 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
         ButterKnife.unbind(this);
     }
-
 }

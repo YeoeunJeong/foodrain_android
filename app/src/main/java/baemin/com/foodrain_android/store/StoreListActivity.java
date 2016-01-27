@@ -27,13 +27,16 @@ public class StoreListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        List<Category> mCategories = (List) intent.getBundleExtra(Constants.CATEGORY_BUNDLE).getSerializable(Constants.CATEGORY_SERIALIZABLE);
-        Log.i("categorytest", mCategories.get(1).getName());
+        List<Category> mCategories = (List) intent.getBundleExtra(Constants.CATEGORY_BUNDLE)
+                .getSerializable(Constants.CATEGORY_SERIALIZABLE);
+        int categorySelectedPosition = Integer.parseInt(intent.getStringExtra(Constants.CATEGORY_SELECTED_POSITION));
+
 
         mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), mCategories));
+        mViewPager.setCurrentItem(categorySelectedPosition);
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
-
-
     }
+
+
 }

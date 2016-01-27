@@ -1,32 +1,17 @@
 package baemin.com.foodrain_android.vo;
 
-public class Store {
+import java.util.List;
 
-    /*
-    [{"id":1,
- "name":네네치킨 석촌점",
- "address": "서울특별시 송파구 석촌동 666"
- "status":1,                          	//배달상태(1:가능, 9:종료)
- "tag":["전화주문", "바로결제"]
- "review”: 3
- “grade” 3.2
- "main_image":{"url" : "http://www.foodrain.co.kr/upload_file/shop/2014_02_.jpg",
-	"file_name" : "background.jpg",
-	"file_size" : 9992,
-	"width" : 600,
-	"height" : 400
-  }
-}]
-     */
+public class Store {
 
     private int id;
     private String name;
     private String address;
     private int status;
     private String[] tag;
-    private int review;
-    private float grade;
-    private Image mainImage;
+    private int review_cnt;
+    private float grade_avg;
+    private List<Image> main_image;
 
     public int getId() {
         return id;
@@ -68,27 +53,27 @@ public class Store {
         this.tag = tag;
     }
 
-    public int getReview() {
-        return review;
+    public int getReview_cnt() {
+        return review_cnt;
     }
 
-    public void setReview(int review) {
-        this.review = review;
+    public void setReview_cnt(int review_cnt) {
+        this.review_cnt = review_cnt;
     }
 
-    public float getGrade() {
-        return grade;
+    public float getGrade_avg() {
+        return grade_avg;
     }
 
-    public void setGrade(float grade) {
-        this.grade = grade;
+    public void setGrade_avg(float grade_avg) {
+        this.grade_avg = grade_avg;
     }
 
-    public Image getMainImage() {
-        return mainImage;
+    public List<Image> getMain_image() {
+        return main_image;
     }
 
-    public void setMainImage(Image mainImage) {
-        this.mainImage = mainImage;
+    public void setMain_image(List<Image> main_image) {
+        this.main_image = main_image;
     }
 }

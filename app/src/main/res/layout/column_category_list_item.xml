@@ -6,7 +6,7 @@
     android:background="#000000">
 
     <TextView
-        android:id="@+id/column_category_list_btn_name"
+        android:id="@+id/column_category_list_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

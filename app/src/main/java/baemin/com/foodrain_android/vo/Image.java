@@ -12,8 +12,8 @@ public class Image {
      */
 
     private String url;
-    private String fileName;
-    private int fileSize;
+    private String file_name;
+    private int file_size;
     private int width;
     private int height;
 
@@ -25,20 +25,20 @@ public class Image {
         this.url = url;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFile_name() {
+        return file_name;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
     }
 
-    public int getFileSize() {
-        return fileSize;
+    public int getFile_size() {
+        return file_size;
     }
 
-    public void setFileSize(int fileSize) {
-        this.fileSize = fileSize;
+    public void setFile_size(int file_size) {
+        this.file_size = file_size;
     }
 
     public int getWidth() {
