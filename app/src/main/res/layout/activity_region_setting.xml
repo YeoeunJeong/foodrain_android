@@ -9,51 +9,53 @@
     tools:context="baemin.com.foodrain_android.setting.RegionSettingActivity">
 
 
-    <!-- -->
-    <android.support.design.widget.AppBarLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/region_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/AppTheme.AppBarOverlay" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/region_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:paddingBottom="5dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp">
 
         <EditText
             android:id="@+id/region_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:hint="동명을 입력해주세요. 예:석촌"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorAccentLight" />
 
         <Button
             android:id="@+id/region_search_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="3dp"
-            android:text="검색" />
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="검색"
+            android:textColor="@color/colorAccent" />
     </LinearLayout>
 
     <TextView
-        android:padding="16dp"
         android:id="@+id/region_no_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:padding="16dp"
         android:text="검색 결과가 없습니다 "
+        android:visibility="gone"
         tools:visibility="visible" />
 
     <ListView

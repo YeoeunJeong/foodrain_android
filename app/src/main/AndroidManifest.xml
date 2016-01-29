@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="baemin.com.foodrain_android" >
+    package="baemin.com.foodrain_android">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,24 +9,19 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".home.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".store.StoreListActivity" >
-        </activity>
-        <activity android:name=".store.StoreDetailActivity" >
-        </activity>
-        <activity android:name=".setting.RegionSettingActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+        <activity android:name=".store.StoreListActivity"></activity>
+        <activity android:name=".store.StoreDetailActivity"></activity>
+        <activity android:name=".setting.RegionSettingActivity"></activity>
     </application>
 
 </manifest>

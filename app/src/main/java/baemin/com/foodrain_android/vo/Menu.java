@@ -1,6 +1,6 @@
 package baemin.com.foodrain_android.vo;
 
-public class Image {
+public class Menu {
 
     private String url;
 
@@ -11,5 +11,4 @@ public class Image {
     public void setUrl(String url) {
         this.url = url;
     }
-
 }

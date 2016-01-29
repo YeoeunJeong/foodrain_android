@@ -3,17 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/smile" />
+    <!--android:background="@drawable/main_category_btn_click" -->
 
     <TextView
         android:id="@+id/column_category_list_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center_horizontal"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:layout_margin="30dp"
-        android:textColor="#ffffff"
+        android:gravity="center_horizontal"
         tools:text="test" />
+    <!--android:focusableInTouchMode="false"-->
 </LinearLayout>

@@ -40,9 +40,12 @@ public class SharedPreference {
      */
     private boolean mBulkUpdate = false;
     public void clear() {
-        doEdit();
+        mEditor = mPref.edit();
         mEditor.clear();
-        doCommit();
+        mEditor = null;
+//        doEdit();
+//        mEditor.clear();
+//        doCommit();
     }
 
     public void edit() {
