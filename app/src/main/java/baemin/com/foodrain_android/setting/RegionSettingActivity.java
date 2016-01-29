@@ -52,6 +52,13 @@ public class RegionSettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_region_setting);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void getSearchedRegionList(String inputName) {

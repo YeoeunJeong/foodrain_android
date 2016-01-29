@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="개인 메뉴">
-        <menu>
             <item
                 android:id="@+id/nav_notice"
                 android:icon="@android:drawable/ic_menu_manage"
@@ -15,8 +13,4 @@
                 android:id="@+id/nav_favorites"
                 android:icon="@android:drawable/ic_menu_slideshow"
                 android:title="단골매장" />
-        </menu>
-
-    </item>
-
 </menu>

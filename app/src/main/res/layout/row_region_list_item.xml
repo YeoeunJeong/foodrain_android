@@ -21,7 +21,7 @@ android:padding="16dp"
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
-        android:src="@mipmap/cancel"
+        android:src="@drawable/cancel"
         android:visibility="invisible"
         tools:visibility="visible" />
 </LinearLayout>

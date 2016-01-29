@@ -1,12 +1,11 @@
 package baemin.com.foodrain_android.network;
 
-import java.util.List;
-
 import baemin.com.foodrain_android.util.Constants;
 import baemin.com.foodrain_android.vo.Store;
 import baemin.com.foodrain_android.vo.Stores;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface StoreService {
@@ -23,6 +22,9 @@ public interface StoreService {
 
     @GET(Constants.URL_PATH_GET_STORES)
     Call<Stores> getStores(@Query("category") int categoryId);
+
+    @GET(Constants.URL_PATH_GET_STORES)
+    Call<Store> getStoreDetail(@Path("id") int id);
 
 //    @GET(Constants.URL_PATH_GET_STORES)
 //    Call<Stores> getStores(

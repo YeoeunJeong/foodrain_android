@@ -23,6 +23,7 @@ import baemin.com.foodrain_android.R;
 import baemin.com.foodrain_android.network.CategoryService;
 import baemin.com.foodrain_android.network.ServiceGenerator;
 import baemin.com.foodrain_android.setting.RegionSettingActivity;
+import baemin.com.foodrain_android.store.StoreDetailActivity;
 import baemin.com.foodrain_android.store.StoreListActivity;
 import baemin.com.foodrain_android.util.Constants;
 import baemin.com.foodrain_android.util.SharedPreference;
@@ -132,9 +133,14 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_favorites) {
-        } else if (id == R.id.nav_notice) {
+        if (id == R.id.nav_notice) {
+            Intent intent = new Intent(MainActivity.this, StoreListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_reviews) {
+            Intent intent = new Intent(MainActivity.this, StoreDetailActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_favorites) {
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -165,5 +171,6 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        SharedPreference.getInstance(MainActivity.this).clear();
     }
 }

@@ -32,7 +32,7 @@ public class StoreListViewAdapter extends FRBaseAdapter<Store> {
             convertView.setTag(holder);
         }
         // image는 그냥 test
-        holder.storeIv.setImageResource(R.mipmap.main_category_pizza);
+        holder.storeIv.setImageResource(R.drawable.main_category_pizza);
         holder.ratingBar.setRating(list.get(position).getGrade_avg());
         holder.storeNameTv.setText(list.get(position).getName());
         holder.reviewCountsTv.setText(String.valueOf(list.get(position).getReview_cnt()));

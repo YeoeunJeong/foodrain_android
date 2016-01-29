@@ -15,6 +15,7 @@ import java.util.List;
 import baemin.com.foodrain_android.R;
 import baemin.com.foodrain_android.network.ServiceGenerator;
 import baemin.com.foodrain_android.network.StoreService;
+import baemin.com.foodrain_android.util.Constants;
 import baemin.com.foodrain_android.vo.Store;
 import baemin.com.foodrain_android.vo.Stores;
 import butterknife.Bind;
@@ -28,13 +29,13 @@ public class StoreListFragment extends Fragment {
     private Activity mActivity;
     private List<Store> mStoreList;
     private Stores mStores;
-    private int categoryId;
+    private int mCategoryId;
 
     @Bind(R.id.store_list_listview)
     ListView listView;
 
     public StoreListFragment(int categoryId) {
-        this.categoryId = categoryId;
+        this.mCategoryId = categoryId;
     }
 
     @Override
@@ -44,18 +45,18 @@ public class StoreListFragment extends Fragment {
 
         mActivity = getActivity();
 
-        getStoreList();
+        getStores();
         return view;
     }
 
-    private void getStoreList() {
+    private void getStores() {
         StoreService storeService = ServiceGenerator.getInstance().getStores();
 
         Intent intent = mActivity.getIntent();
 
         // page, categoryId, regionId, longitude, latitude
-        Call<Stores> storeListCall = storeService.getStores(categoryId);
-        storeListCall.enqueue(mCallBack);
+        Call<Stores> storesCall = storeService.getStores(mCategoryId);
+        storesCall.enqueue(mCallBack);
     }
 
     private Callback<Stores> mCallBack = new Callback<Stores>() {
@@ -69,15 +70,14 @@ public class StoreListFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(mActivity, StoreDetailActivity.class);
+                    intent.putExtra(Constants.STORE_ID, mStoreList.get(position).getId());
                     startActivity(intent);
                 }
             });
-
         }
 
         @Override
         public void onFailure(Throwable t) {
-
         }
     };
 

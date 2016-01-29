@@ -1,6 +1,7 @@
 package baemin.com.foodrain_android.network;
 
 import baemin.com.foodrain_android.util.Constants;
+import baemin.com.foodrain_android.vo.Review;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 
@@ -35,5 +36,9 @@ public class ServiceGenerator {
 
     public RegionService getRegions() {
         return createService(RegionService.class);
+    }
+
+    public ReviewService gerReviews() {
+        return createService(ReviewService.class);
     }
 }
