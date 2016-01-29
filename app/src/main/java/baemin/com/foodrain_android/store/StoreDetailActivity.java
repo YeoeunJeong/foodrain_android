@@ -53,7 +53,7 @@ public class StoreDetailActivity extends AppCompatActivity {
         viewPager.setAdapter(new StoreDetailViewPagerAdapter(getSupportFragmentManager(), intent.getIntExtra(Constants.STORE_ID, 0)));
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setSelectedIndicatorColors(0xFFDCBAC7);
-        slidingTabLayout.setTextColor(getResources().getColorStateList(R.drawable.tab_selector));
+//        slidingTabLayout.setTextColor(0xFFDCBAC7);
         slidingTabLayout.setViewPager(viewPager);
     }
 
