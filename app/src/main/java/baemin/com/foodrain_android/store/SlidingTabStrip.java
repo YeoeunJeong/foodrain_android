@@ -27,17 +27,16 @@ import android.widget.LinearLayout;
 
 import baemin.com.foodrain_android.R;
 
-/**
- * Created by elite on 16. 1. 26..
- */
 public class SlidingTabStrip extends LinearLayout {
 
     private static final int DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS = 0;
     private static final byte DEFAULT_BOTTOM_BORDER_COLOR_ALPHA = 0x26;
     private static final int SELECTED_INDICATOR_THICKNESS_DIPS = 3;
+
+    //ye
 //    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = R.color.colorAccent;
 //    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF33B5E5;
-    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFFDCBAC7;
+    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFFF28515;
 
     private final int mBottomBorderThickness;
     private final Paint mBottomBorderPaint;

@@ -1,8 +1,9 @@
 package baemin.com.foodrain_android.home;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +29,14 @@ import java.util.List;
 import baemin.com.foodrain_android.R;
 import baemin.com.foodrain_android.network.CategoryService;
 import baemin.com.foodrain_android.network.ServiceGenerator;
-import baemin.com.foodrain_android.setting.RegionSettingActivity;
-import baemin.com.foodrain_android.store.StoreDetailActivity;
+import baemin.com.foodrain_android.network.UserService;
+import baemin.com.foodrain_android.region.RegionSettingActivity;
 import baemin.com.foodrain_android.store.StoreListActivity;
+import baemin.com.foodrain_android.store.StoreReviewActivity;
 import baemin.com.foodrain_android.util.Constants;
 import baemin.com.foodrain_android.util.SharedPreference;
 import baemin.com.foodrain_android.vo.Category;
+import baemin.com.foodrain_android.vo.UserWithAccessToken;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -36,15 +45,15 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private Intent intent;
     private List<Category> mCategories;
+    private UserWithAccessToken mUserWithAccessToken;
+    private View mHeaderView;
+    private String mAccesToken;
+    private EditText mEmailEt;
+    private EditText mPasswordEt;
 
     @Bind(R.id.main_toolbar)
     Toolbar toolbar;
-
-    @Bind(R.id.main_layout_content)
-    View contentLayout;
 
     @Bind(R.id.content_main_gv_category)
     GridView categoryGridView;
@@ -64,59 +73,183 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setActionBar();
+
+        mCategories = new ArrayList<>();
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        mAccesToken = SharedPreference.getInstance(this).getStringPreference(Constants.PREF_USER_ACCESS_TOKEN);
+        if (mAccesToken.equals("null")) {
+            setBeforeSigninNavigationDrawer();
+        } else {
+            setAfterSigninNavigationDrawer();
+        }
+        requestCategoryList();
+    }
+
+    private void setActionBar() {
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+    }
 
-        navigationView.setNavigationItemSelectedListener(this);
-        getCategoryList();
+    private void setBeforeSigninNavigationDrawer() {
+        if (mHeaderView != null) {
+            navigationView.removeHeaderView(mHeaderView);
+        }
+        mHeaderView = navigationView.inflateHeaderView(R.layout.nav_before_sign_in);
+
+        mEmailEt = (EditText) mHeaderView.findViewById(R.id.nav_email_et);
+        mPasswordEt = (EditText) mHeaderView.findViewById(R.id.nav_pw_et);
+
+        TextView signUpBtn = (TextView) mHeaderView.findViewById(R.id.nav_sign_up_tv);
+        signUpBtn.setOnClickListener(mSignUpOnClick);
+
+        Button signInBtn = (Button) mHeaderView.findViewById(R.id.nav_sign_in_btn);
+        signInBtn.setOnClickListener(mSignInOnClick);
+    }
+
+
+    private void setAfterSigninNavigationDrawer() {
+        if (mHeaderView != null) {
+            navigationView.removeHeaderView(mHeaderView);
+        }
+        mHeaderView = navigationView.inflateHeaderView(R.layout.nav_after_sign_in);
+        TextView signOutBtn = (TextView) mHeaderView.findViewById(R.id.nav_sign_out_btn_tv);
+        signOutBtn.setOnClickListener(mSignOutOnClick);
+    }
+
+    private View.OnClickListener mSignUpOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener mSignInOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            requestSignIn(mEmailEt.getText().toString(), mPasswordEt.getText().toString());
+
+        }
+    };
+
+    private void requestSignIn(String email, String password) {
+        UserService userService = ServiceGenerator.getInstance().getUserService();
+        Call<UserWithAccessToken> userWithAccessTokenCall = userService.signIn(email, password);
+        userWithAccessTokenCall.enqueue(mUserCallback);
+
+    }
+
+    private Callback<UserWithAccessToken> mUserCallback = new Callback<UserWithAccessToken>() {
+        @Override
+        public void onResponse(Response<UserWithAccessToken> response) {
+            mUserWithAccessToken = response.body();
+            if (mUserWithAccessToken != null) {
+                setAfterSigninNavigationDrawer();
+                SharedPreference.getInstance(MainActivity.this)
+                        .putStringPreference(Constants.PREF_USER_ACCESS_TOKEN, mUserWithAccessToken.getAccess_token());
+                onBackPressed();
+                Toast.makeText(MainActivity.this, "로그인 하였습니다", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+
+            Toast.makeText(MainActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private View.OnClickListener mSignOutOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            SharedPreference.getInstance(MainActivity.this).removePreference(Constants.PREF_USER_ACCESS_TOKEN);
+            setBeforeSigninNavigationDrawer();
+            onBackPressed();
+            Toast.makeText(MainActivity.this, "로그아웃 하였습니다", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private boolean checkWhiteSpace(String email, String password) {
+        boolean result = false;
+
+        if (StringUtils.isWhitespace(email) || StringUtils.isWhitespace(password)) {
+            Toast.makeText(MainActivity.this, "이메일 또는 패스워드를 확인해주세요", Toast.LENGTH_SHORT).show();
+        } else {
+            result = true;
+        }
+
+        return result;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        String regionName = SharedPreference.getInstance(MainActivity.this).getRegion();
-        if (regionName != null) {
+        String regionName = SharedPreference.getInstance(this).getStringPreference(Constants.PREF_REGION_NAME_KEY);
+        if (regionName != null && !regionName.equals("null")) {
+            regionTv.setVisibility(View.VISIBLE);
             regionTv.setText(regionName);
+        } else {
+            regionTv.setVisibility(View.GONE);
         }
     }
 
-    private void getCategoryList() {
-        CategoryService categoryService = ServiceGenerator.getInstance().getCategories();
+    private void requestCategoryList() {
+        CategoryService categoryService = ServiceGenerator.getInstance().getCategoryService();
 
         Call<List<Category>> categoryListCall = categoryService.getCategories();
-        categoryListCall.enqueue(mCallback);
+        categoryListCall.enqueue(mCategoriesCallback);
     }
 
-    private Callback<List<Category>> mCallback = new Callback<List<Category>>() {
+    private Callback<List<Category>> mCategoriesCallback = new Callback<List<Category>>() {
         @Override
         public void onResponse(Response<List<Category>> response) {
-            mCategories = response.body();
+
+            mCategories.addAll(response.body());
+//            mCategories = response.body();
 
             categoryGridView.setAdapter(new CategoryGridAdapter(MainActivity.this, mCategories));
-            categoryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(MainActivity.this, StoreListActivity.class);
-                    ArrayList<Category> arrayList = (ArrayList) mCategories;
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(Constants.CATEGORY_SERIALIZABLE, arrayList);
-                    intent.putExtra(Constants.CATEGORY_BUNDLE, bundle);
-                    intent.putExtra(Constants.CATEGORY_SELECTED_POSITION, String.valueOf(position));
-                    intent.putExtra(Constants.CATEGORY_ID, String.valueOf(mCategories.get(position).getId()));
-
-                    startActivity(intent);
-                }
-            });
+            categoryGridView.setOnItemClickListener(mOnItemClickListener);
         }
+
+        private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, StoreListActivity.class);
+                ArrayList<Category> arrayList = (ArrayList) mCategories;
+                Bundle bundle = new Bundle();
+
+                bundle.putSerializable(Constants.CATEGORY_SERIALIZABLE, arrayList);
+                intent.putExtra(Constants.CATEGORY_BUNDLE, bundle);
+                intent.putExtra(Constants.CATEGORY_SELECTED_POSITION, String.valueOf(position));
+                intent.putExtra(Constants.CATEGORY_ID, String.valueOf(mCategories.get(position).getId()));
+
+                startActivity(intent);
+            }
+        };
 
         @Override
         public void onFailure(Throwable t) {
-            Log.i("test3", t.getMessage());
+//            if (isFinishing()) {
+//                return;
+//            }
+            new AlertDialog.Builder(MainActivity.this)
+                    .setMessage("서버 연결 실패. 다시 시도해 주십시오")
+                    .setPositiveButton("확인", null)
+                    .show();
         }
     };
+
+    private void editTextRequestFocus(EditText editText) {
+        editText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
 
     @Override
     public void onBackPressed() {
@@ -134,13 +267,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_notice) {
-            Intent intent = new Intent(MainActivity.this, StoreListActivity.class);
-            startActivity(intent);
         } else if (id == R.id.nav_reviews) {
-            Intent intent = new Intent(MainActivity.this, StoreDetailActivity.class);
-            startActivity(intent);
         } else if (id == R.id.nav_favorites) {
-
+            Intent intent = new Intent(MainActivity.this, StoreReviewActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -151,17 +281,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main_bar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_location_icon) {
+        if (id == R.id.action_region_setting_icon) {
             Intent intent = new Intent(MainActivity.this, RegionSettingActivity.class);
             startActivity(intent);
-
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -171,6 +300,5 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        SharedPreference.getInstance(MainActivity.this).clear();
     }
 }

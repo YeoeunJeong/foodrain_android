@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context="baemin.com.foodrain_android.store.StoreReviewActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="제점수는요" />
+
+        <RatingBar
+            android:id="@+id/store_review_ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/store_review_et"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:hint="평을 남겨주세요"
+        android:inputType="textMultiLine"
+        tools:text="
+        맛있습니다
+        처음 먹는맛입니다.
+         즐겁습니다
+        그렇습니까?
+        저도그렇습니다
+        집에갑니다.
+        졸립지만 힘을 냅니다.
+         더졸립니다
+         괜찮습니다
+         안괜찮습니다?
+         아닙니다
+         괜찮습니다" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/store_review_ok_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="등록하기" />
+    </LinearLayout>
+</LinearLayout>

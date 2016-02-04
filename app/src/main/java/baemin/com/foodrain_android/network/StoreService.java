@@ -21,17 +21,18 @@ public interface StoreService {
     Call<Stores> getTotalStores();
 
     @GET(Constants.URL_PATH_GET_STORES)
-    Call<Stores> getStores(@Query("category") int categoryId);
+    Call<Stores> getStores(
+            @Query("category") int categoryId,
+            @Query("page") int page);
 
     @GET(Constants.URL_PATH_GET_STORES)
-    Call<Store> getStoreDetail(@Path("id") int id);
+    Call<Stores> getStores(
+            @Query("category") int categoryId,
+            @Query("page") int page,
+            @Query("longitude") double longitude,
+            @Query("latitude") double latitude);
 
-//    @GET(Constants.URL_PATH_GET_STORES)
-//    Call<Stores> getStores(
-//            @Query("page") String page
-//            , @Query("category") String categoryId
-//            , @Query("region") String regionId
-//            , @Query("longitude") String longitude
-//            , @Query("latitude") String latitude
-//    );
+    @GET(Constants.URL_PATH_GET_STORE_INFO)
+    Call<Store> getStoreInfo(@Path("id") int id);
+
 }

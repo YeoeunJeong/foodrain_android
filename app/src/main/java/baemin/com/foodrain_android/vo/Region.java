@@ -1,22 +1,23 @@
 package baemin.com.foodrain_android.vo;
 
 public class Region {
-    private int id;
-    private String name;
 
-    public int getId() {
-        return id;
+    String address;
+    Location location;
+
+    public String getAddress() {
+        return address;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getName() {
-        return name;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

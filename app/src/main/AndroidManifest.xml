@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="baemin.com.foodrain_android">
+    package="baemin.com.foodrain_android" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".home.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" />
+        <activity android:name=".store.StoreListActivity" />
+        <activity android:name=".store.StoreDetailActivity" />
+        <activity android:name=".region.RegionSettingActivity" />
+        <activity android:name=".home.SignUpActivity" />
+        <activity
+            android:name=".home.LaunchActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".store.StoreListActivity"></activity>
-        <activity android:name=".store.StoreDetailActivity"></activity>
-        <activity android:name=".setting.RegionSettingActivity"></activity>
+        <activity android:name=".store.StoreReviewActivity" >
+        </activity>
     </application>
 
 </manifest>

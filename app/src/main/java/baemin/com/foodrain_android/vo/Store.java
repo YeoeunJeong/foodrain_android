@@ -1,46 +1,25 @@
 package baemin.com.foodrain_android.vo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Store {
+public class Store implements Serializable {
     private int id;
     private String name;
+    private String category;
     private String address;
     private int status;
     private String start_time;
     private String end_time;
     private String holiday;
     private String[] tag;
-    private int review_cnt;
-    private float grade_avg;
+    private int review_count;
+    private float grade_average;
     private String phone;
     private List<Menu> menus;
-    private List<Image> main_image;
+    private List<Image> images;
+    private String detail;
 
-
-    /*
-"address": "서울특별시 송파구 석촌동 666",
-"status":1,                          			//배달상태(1:가능, 9:종료)
-"start_time":  "11:00",
-"end_time":  "23:00",
-"holiday":  "월",
-"tag":["전화주문"],
-"review_cnt”: 3,				// 리뷰수
-“grade_avg” 3.2,				// 리뷰 평균 평점
-"phone": "02-666-6666",
-"menus":
-[
-{
-"uri" : "http://www.foodrain.co.kr/upload_file/shop/2014_02_.jpg",
-    }
-]
- "main_image":
-[
-{
-"url" : "http://www.foodrain.co.kr/upload_file/shop/2014_02_.jpg",
-      }
-]
- */
     public int getId() {
         return id;
     }
@@ -55,6 +34,14 @@ public class Store {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getAddress() {
@@ -105,22 +92,22 @@ public class Store {
         this.tag = tag;
     }
 
-    public int getReview_cnt() {
-        return review_cnt;
+    public int getReview_count() {
+        return review_count;
     }
 
-    public void setReview_cnt(int review_cnt) {
-        this.review_cnt = review_cnt;
+    public void setReview_count(int review_count) {
+        this.review_count = review_count;
     }
 
-    public float getGrade_avg() {
-        return grade_avg;
+    public float getGrade_average() {
+        return grade_average;
     }
 
-    public void setGrade_avg(float grade_avg) {
-        this.grade_avg = grade_avg;
+    public void setGrade_average(float grade_average) {
+        this.grade_average = grade_average;
     }
-    
+
     public String getPhone() {
         return phone;
     }
@@ -137,11 +124,19 @@ public class Store {
         this.menus = menus;
     }
 
-    public List<Image> getMain_image() {
-        return main_image;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setMain_image(List<Image> main_image) {
-        this.main_image = main_image;
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }

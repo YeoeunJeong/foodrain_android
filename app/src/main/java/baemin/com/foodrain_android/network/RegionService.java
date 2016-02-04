@@ -9,6 +9,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface RegionService {
-    @GET (Constants.URL_PATH_GET_REGIONS)
+    @GET(Constants.URL_PATH_GET_REGIONS)
     Call<List<Region>> getRegions(@Query("name") String name);
+
+    @GET(Constants.URL_PATH_GET_REGIONS)
+    Call<List<Region>> getRegions(
+            @Query("longitude") double longitude,
+            @Query("latitude") double latitude);
+
 }

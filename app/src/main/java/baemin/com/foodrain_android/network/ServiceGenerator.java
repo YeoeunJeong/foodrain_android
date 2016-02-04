@@ -21,24 +21,29 @@ public class ServiceGenerator {
     private <T> T createService(Class<T> serviceClass) {
         return new Retrofit.Builder()
                 .baseUrl(Constants.LOCAL_URL)
+//                .baseUrl(Constants.LOCAL_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(serviceClass);
     }
 
-    public CategoryService getCategories() {
+    public CategoryService getCategoryService() {
         return createService(CategoryService.class);
     }
 
-    public StoreService getStores() {
+    public StoreService getStoreService() {
         return createService(StoreService.class);
     }
 
-    public RegionService getRegions() {
+    public RegionService getRegionService() {
         return createService(RegionService.class);
     }
 
-    public ReviewService gerReviews() {
+    public ReviewService getReviewService() {
         return createService(ReviewService.class);
+    }
+
+    public UserService getUserService() {
+        return createService(UserService.class);
     }
 }

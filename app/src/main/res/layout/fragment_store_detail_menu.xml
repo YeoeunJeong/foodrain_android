@@ -14,41 +14,28 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/store_detail_menu_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/smile" />
+                    android:src="@drawable/dump_img_store_menu"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/smile" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/smile" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/smile" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/smile" />
-
+                    android:src="@drawable/dump_img_store_menu"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
             </LinearLayout>
-
         </ScrollView>
     </LinearLayout>
-
-
 </RelativeLayout>

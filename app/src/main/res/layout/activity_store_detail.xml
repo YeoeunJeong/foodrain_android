@@ -15,18 +15,89 @@
         android:background="?attr/colorPrimary"
         app:theme="@style/AppTheme.AppBarOverlay" />
 
+    <LinearLayout
+        android:id="@+id/bottom_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:id="@+id/fab"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="bottom|end"-->
-    <!--android:layout_margin="@dimen/fab_margin"-->
-    <!--android:background="#000000"-->
-    <!--android:src="@android:drawable/ic_menu_call" />-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:id="@+id/store_detail_grade_avg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1.5"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30sp"
+                    tools:text="3.8" />
+
+                <RatingBar
+                    android:id="@+id/store_detail_ratingbar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+
+                    android:isIndicator="true"
+                    android:progressBackgroundTint="@color/colorAccentLight"
+                    android:progressTint="@color/colorAccentDark"
+                    android:secondaryProgressTint="@color/colorAccentLight"
+                    android:stepSize="0.01"
+                    tools:numStars="5"
+                    tools:rating="3.8" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:text="리뷰"
+                    android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/store_detail_review_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorWhite"
+                    tools:text="20" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/store_detail_phone_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:text="전화주문"
+            android:textColor="@color/colorAccent" />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/bottom_bar_layout"
         android:layout_below="@id/store_detail_toolbar"
         android:orientation="vertical">
 
@@ -45,28 +116,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:gravity="center_vertical"
-            android:paddingLeft="16dp"
-            android:text="평점이 들어갑니다"
-            android:textColor="@color/colorWhite" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
-            android:text="전화주문"
-            android:textColor="@color/colorAccent" />
-    </LinearLayout>
 </RelativeLayout>

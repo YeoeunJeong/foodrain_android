@@ -1,23 +1,9 @@
 package baemin.com.foodrain_android.vo;
 
-import android.os.Parcelable;
 
 import java.io.Serializable;
 
 public class Category implements Serializable {
-    /*{"id":1,
- "name": "치킨"
-},
- {"id":2,
- "name":"중국집"
-},
-{"id":3,
- "name":"피자"
-},
-{"id":4,
- "name":"족발/보쌈"
-}
-*/
     private int id;
     private String name;
 

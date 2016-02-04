@@ -16,109 +16,143 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="16dp">
+                android:orientation="vertical">
 
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/store_detail_info_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone" />
+                <!--android:layout_height="wrap_content"-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="배달시간"
-                        android:textStyle="bold" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4">
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp">
 
                         <TextView
-                            android:id="@+id/store_detail_info_start_time"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            tools:text="6:00" />
+                            android:layout_weight="1"
+                            android:text="배달시간"
+                            android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text=" - " />
+                            android:layout_weight="4">
 
-                        <TextView
-                            android:id="@+id/store_detail_info_end_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="23:59" />
+                            <TextView
+                                android:id="@+id/store_detail_info_start_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="6:00" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" - " />
+
+                            <TextView
+                                android:id="@+id/store_detail_info_end_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="23:59" />
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp">
-
-                    <TextView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="휴무일"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp">
 
-                    <TextView
-                        android:id="@+id/store_detail_info_holiday"
-                        android:layout_width="0dp"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="휴무일"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/store_detail_info_holiday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            tools:text="일" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        tools:text="일" />
-                </LinearLayout>
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp">
 
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="전화번호"
+                            android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp">
+                        <TextView
+                            android:id="@+id/store_detail_info_phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            tools:text="02 - 345 - 6789" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="전화번호"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp">
 
-                    <TextView
-                        android:id="@+id/store_detail_info_phone"
-                        android:layout_width="0dp"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="주소"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/store_detail_info_address"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            tools:text="서울시 송파구 잠실동 배민빌딩 201호" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        tools:text="02 - 345 - 6789" />
-                </LinearLayout>
+                        android:orientation="horizontal"
+                        android:paddingTop="16dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="설명"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="주소"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/store_detail_info_address"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        tools:text="서울시 송파구 잠실동 배민빌딩 201호" />
+                        <TextView
+                            android:id="@+id/store_detail_info_detail"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            tools:text="맛난 치킨을 파는 피자집입니다. 사실 제일 맛있는 메뉴는 피클입니다." />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 

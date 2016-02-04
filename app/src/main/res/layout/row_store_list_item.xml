@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dp"
-    >
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/store_list_item_store_img"
@@ -13,13 +12,14 @@
         android:layout_height="match_parent"
         android:layout_weight="5"
         android:scaleType="centerInside"
-        tools:src="@drawable/main_category_pizza" />
+        android:src="@drawable/ready" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="10"
         android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="10dp">
 
         <!-- 평점 별 들어와야할자리 -->
@@ -32,9 +32,12 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:isIndicator="true"
+            android:progressBackgroundTint="@color/colorAccentLight"
+            android:progressTint="@color/colorAccentDark"
+            android:secondaryProgressTint="@color/colorAccentLight"
+            android:stepSize="0.01"
             tools:numStars="5"
-            tools:rating="2.3"
-            tools:stepSize="0.01" />
+            tools:rating="2.3" />
 
         <TextView
             android:id="@+id/store_list_item_store_name"
@@ -52,6 +55,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:text="리뷰" />
 
             <TextView
