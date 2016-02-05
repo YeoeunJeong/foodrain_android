@@ -1,6 +1,8 @@
 package baemin.com.foodrain_android.vo;
 
-public class Menu {
+import java.io.Serializable;
+
+public class Menu implements Serializable{
 
     private String url;
 

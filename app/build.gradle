@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "baemin.com.foodrain_android"
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -28,7 +28,10 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
-    compile 'com.squareup.picasso:picasso:2.5.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'com.google.android.gms:play-services-location:8.4.0'
+
 // https://github.com/ogaclejapan/SmartTabLayout
 //    compile 'com.ogaclejapan.smarttablayout:library:1.6.0@aar'
 }

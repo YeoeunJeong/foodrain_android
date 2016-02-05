@@ -10,18 +10,19 @@
         android:id="@+id/store_detail_review_user_img"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@android:drawable/ic_menu_myplaces" />
+        android:src="@drawable/ready" />
+    <!--android:src="@android:drawable/ic_menu_myplaces" -->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:paddingLeft="16dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="16dp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/store_detail_review_user_nickname"
@@ -32,28 +33,38 @@
 
             <TextView
                 android:id="@+id/store_detail_review_date"
-                android:paddingLeft="10dp"
-                android:textSize="10sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2016-01-01" />
+                android:paddingLeft="10dp"
+                android:text="2016-01-01"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <RatingBar
             android:id="@+id/store_detail_review_ratingbar"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:isIndicator="true"
+            android:progressBackgroundTint="@color/colorAccentLight"
+            android:progressTint="@color/colorAccentDark"
+            android:secondaryProgressTint="@color/colorAccentLight"
             tools:rating="2.3"
             tools:stepSize="0.01" />
+
+        <LinearLayout
+            android:id="@+id/store_detail_review_img_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
 
         <TextView
             android:id="@+id/store_detail_review_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="리뷰 내용이 들어갑니다" />
+
 
     </LinearLayout>
 

@@ -9,7 +9,6 @@ public class Stores {
   "records": 20,
   "rows": [
    */
-
     private int page;
     private int total;
     private int records;

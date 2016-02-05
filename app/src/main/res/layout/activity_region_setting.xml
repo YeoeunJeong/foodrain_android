@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="baemin.com.foodrain_android.setting.RegionSettingActivity">
+    tools:context="baemin.com.foodrain_android.region.RegionSettingActivity">
 
 
     <android.support.v7.widget.Toolbar
@@ -15,7 +14,6 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,14 +47,27 @@
             android:textColor="@color/colorAccent" />
     </LinearLayout>
 
-    <TextView
+    <RelativeLayout
         android:id="@+id/region_no_result"
         android:layout_width="match_parent"
+        android:padding="10dp"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="검색 결과가 없습니다 "
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/region_default1" />
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/region_default2" />
+    </RelativeLayout>
+
 
     <ListView
         android:id="@+id/region_listview"

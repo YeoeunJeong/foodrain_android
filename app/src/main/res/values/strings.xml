@@ -1,9 +1,19 @@
 <resources>
     <string name="app_name">FoodRain</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
+    <string name="sign_up"><u>아직 회원이 아니신가요?</u></string>
+    <string name="sign_out"><u>로그 아웃</u></string>
 
+    <string-array name="phone_num">
+        <item>010</item>
+        <item>011</item>
+        <item></item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
 </resources>

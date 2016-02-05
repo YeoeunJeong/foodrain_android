@@ -1,4 +1,4 @@
-package baemin.com.foodrain_android.setting;
+package baemin.com.foodrain_android.region;
 
 import android.content.Context;
 import android.view.View;
@@ -31,7 +31,7 @@ public class RegionListViewAdapter extends FRBaseAdapter<Region> {
             holder = new RegionListViewHolder(convertView);
             convertView.setTag(holder);
         }
-        holder.regionNameTv.setText(list.get(position).getName());
+        holder.regionNameTv.setText(list.get(position).getAddress());
         return convertView;
     }
 

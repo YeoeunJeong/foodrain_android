@@ -7,14 +7,13 @@ public class SharedPreference {
     private static SharedPreference instance;
     private Context mContext;
     private SharedPreferences mPref;
-    //            = mContext.getSharedPreferences(Constants.PREF, mContext.MODE_PRIVATE);
     private SharedPreferences.Editor mEditor;
 
     public SharedPreference() {
     }
 
     public SharedPreference(Context context) {
-        mPref = context.getSharedPreferences(Constants.PREF, mContext.MODE_PRIVATE);
+        mPref = context.getSharedPreferences(Constants.PREF_NAME, mContext.MODE_PRIVATE);
     }
 
     public static SharedPreference getInstance(Context context) {
@@ -24,51 +23,47 @@ public class SharedPreference {
         return instance;
     }
 
-
-    public String getRegion() {
-        return mPref.getString(Constants.PREF_REGION, "");
+    public boolean getBooleanPreference(String key) {
+        return mPref.getBoolean(key, false);
     }
 
-    public void putRegion(String region) {
+    public double getDoublePreference(String key) {
+        return (double) mPref.getFloat(key, -1);
+    }
+
+    public String getStringPreference(String key) {
+        return mPref.getString(key, "null");
+    }
+
+
+    public void putBooleanPreference(String key, boolean value) {
         mEditor = mPref.edit();
-        mEditor.putString(Constants.PREF_REGION, region);
+        mEditor.putBoolean(key, value);
         mEditor.commit();
     }
 
-    /**
-     * Remove all keys from SharedPreferences.
-     */
-    private boolean mBulkUpdate = false;
-    public void clear() {
+    public void putDoublePreference(String key, double value) {
+        mEditor = mPref.edit();
+        mEditor.putFloat(key, (float) value);
+        mEditor.commit();
+    }
+
+    public void putStringPreference(String key, String value) {
+        mEditor = mPref.edit();
+
+        mEditor.putString(key, value);
+        mEditor.commit();
+    }
+
+    public void removePreference(String key) {
+        mEditor = mPref.edit();
+        mEditor.remove(key);
+        mEditor.commit();
+    }
+
+    public void removeAllPreferences() {
         mEditor = mPref.edit();
         mEditor.clear();
-        mEditor = null;
-//        doEdit();
-//        mEditor.clear();
-//        doCommit();
-    }
-
-    public void edit() {
-        mBulkUpdate = true;
-        mEditor = mPref.edit();
-    }
-
-    public void commit() {
-        mBulkUpdate = false;
         mEditor.commit();
-        mEditor = null;
-    }
-
-    private void doEdit() {
-        if (!mBulkUpdate && mEditor == null) {
-            mEditor = mPref.edit();
-        }
-    }
-
-    private void doCommit() {
-        if (!mBulkUpdate && mEditor != null) {
-            mEditor.commit();
-            mEditor = null;
-        }
     }
 }

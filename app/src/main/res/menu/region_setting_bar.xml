@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".RegionSettingActivity">
+
+    <item
+        android:id="@+id/action_get_location_icon"
+        android:icon="@drawable/get_location_btn_white"
+        android:title="현재위치로 지정하기"
+        app:showAsAction="always" />
+</menu>
