@@ -19,8 +19,8 @@ public interface ReviewService {
 //    @GET(Constants.URL_PATH_GET_REVIEWS)
 //    Call<Reviews> getReviews(@Path("id") int id);
 
-    @GET(Constants.URL_PATH_GET_TEMP_REVIEWS)
-    Call<Reviews> getReviews(@Query("store_id") int store_id, @Query("page") int page);
+    @GET(Constants.URL_PATH_GET_STORE_REVIEWS)
+    Call<Reviews> getReviews(@Path("id") int id, @Query("page") int page);
 
     /*
    access_token

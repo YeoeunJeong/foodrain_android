@@ -100,29 +100,42 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void requestSignUp(String email, String password, String nickname, String phone, int gender) {
-
         UserService userService = ServiceGenerator.getInstance().getUserService();
         Call<UserWithAccessToken> userWithAccessTokenCall = userService.signUp(
                 email, password, checkStringNull(nickname), checkStringNull(phone), gender);
 
-        Log.i("sign up", email + password + checkStringNull(nickname) + checkStringNull(phone) + gender);
         userWithAccessTokenCall.enqueue(mCallback);
-
     }
 
     private Callback<UserWithAccessToken> mCallback = new Callback<UserWithAccessToken>() {
         @Override
         public void onResponse(Response<UserWithAccessToken> response) {
             mUserWithAccessToken = response.body();
-            SharedPreference.getInstance(SignUpActivity.this).putStringPreference(
-                    Constants.PREF_USER_NICKNAME,
-                    mUserWithAccessToken.getUser().getNickname());
-            Log.i("PREF_USER_NICKNAME",
-                    SharedPreference.getInstance(SignUpActivity.this).getStringPreference(Constants.PREF_USER_NICKNAME));
+            if (mUserWithAccessToken != null) {
+                SharedPreference.getInstance(SignUpActivity.this).putStringPreference(
+                        Constants.PREF_USER_ACCESS_TOKEN,
+                        mUserWithAccessToken.getAccess_token());
+
+                SharedPreference.getInstance(SignUpActivity.this).putStringPreference(
+                        Constants.PREF_USER_NICKNAME,
+                        mUserWithAccessToken.getUser().getNickname());
+
+                SharedPreference.getInstance(SignUpActivity.this).putStringPreference(
+                        Constants.PREF_USER_EMAIL,
+                        mUserWithAccessToken.getUser().getEmail()
+                );
+
+                Toast.makeText(SignUpActivity.this, "반갑습니다", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
+                finish();
+            } else {
+                setResult(RESULT_CANCELED);
+            }
         }
 
         @Override
         public void onFailure(Throwable t) {
+
             Log.i("signup fail", t.getMessage().toString());
         }
     };
@@ -207,7 +220,15 @@ public class SignUpActivity extends AppCompatActivity {
         View radioButton = radioGroup.findViewById(radioButtonID);
         int idx = radioGroup.indexOfChild(radioButton);
 
-        return idx + 1;
+        if (radioGroup.indexOfChild(radioButton) == 0) {
+            idx = 1;
+        } else if (radioGroup.indexOfChild(radioButton) == 1) {
+            idx = 2;
+        } else if (radioGroup.indexOfChild(radioButton) == 2) {
+            idx = 0;
+        }
+
+        return idx;
     }
 
 
@@ -233,6 +254,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .setMessage("정말 나가시겠습니까?")
                 .setPositiveButton("나가기", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        setResult(RESULT_CANCELED);
                         finish();
                     }
                 })

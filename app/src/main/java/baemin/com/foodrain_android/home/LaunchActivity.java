@@ -15,7 +15,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LaunchActivity extends AppCompatActivity {
-   private AccessToken mAccessToken;
+    private AccessToken mAccessToken;
+//    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +24,12 @@ public class LaunchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launch);
 
         removeRegionPreferences();
-
         requestUpdateAccessToken();
+
         Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
         startActivity(intent);
 
         finish();
-
     }
 
     private void removeRegionPreferences() {
@@ -83,5 +83,16 @@ public class LaunchActivity extends AppCompatActivity {
 
         }
     };
+
+    private void createGoogleAPIClient() {
+        // Create an instance of GoogleAPIClient.
+//        if (mGoogleApiClient == null) {
+//            mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                    .addConnectionCallbacks(this)
+//                    .addOnConnectionFailedListener(this)
+//                    .addApi(LocationServices.API)
+//                    .build();
+//        }
+    }
 
 }

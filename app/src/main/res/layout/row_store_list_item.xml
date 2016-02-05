@@ -4,26 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp">
 
     <ImageView
         android:id="@+id/store_list_item_store_img"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:scaleType="centerInside"
+        android:layout_weight="2"
+        android:scaleType="centerCrop"
         android:src="@drawable/ready" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
+        android:layout_weight="5"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="10dp">
-
-        <!-- 평점 별 들어와야할자리 -->
-
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin">
 
         <RatingBar
             android:id="@+id/store_list_item_store_ratingbar"

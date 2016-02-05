@@ -9,9 +9,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import baemin.com.foodrain_android.R;
@@ -82,7 +84,6 @@ public class StoreDetailActivity extends AppCompatActivity {
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setDisplayShowTitleEnabled(true);
-//        mActionBar.setTitle("매장명이길어지면어떻게되나테스트입니다궁금하네요어떻게될까요사실이렇게긴매장명이있을리는없습니다");
         mActionBar.setTitle(mStoreName);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,11 +113,13 @@ public class StoreDetailActivity extends AppCompatActivity {
 
         @Override
         public void onFailure(Throwable t) {
-
+            Log.e("Fail", t.getMessage());
+            t.printStackTrace();
         }
     };
 
     private void setBottomBar(Store store) {
+        Toast.makeText(StoreDetailActivity.this, "setBottom", Toast.LENGTH_SHORT).show();
         float gradeAverage = store.getGrade_average();
         ratingBar.setRating(gradeAverage);
         gradeAverageTv.setText(String.valueOf(gradeAverage));
@@ -126,12 +129,13 @@ public class StoreDetailActivity extends AppCompatActivity {
     }
 
     private void setTab(Store store) {
+        Toast.makeText(StoreDetailActivity.this, "setTab", Toast.LENGTH_SHORT).show();
         viewPager.setAdapter(
                 new StoreDetailViewPagerAdapter(
                         getSupportFragmentManager(), store));
 
         slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setSelectedIndicatorColors(0xFFDCBAC7);
+//        slidingTabLayout.setSelectedIndicatorColors(0xFFDCBAC7);
         slidingTabLayout.setViewPager(viewPager);
     }
 
@@ -143,7 +147,6 @@ public class StoreDetailActivity extends AppCompatActivity {
                                 finish();
                             }
                         }
-                )
-                .setNegativeButton("머물기", null);
+                );
     }
 }

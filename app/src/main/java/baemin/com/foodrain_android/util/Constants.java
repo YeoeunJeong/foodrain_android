@@ -6,7 +6,6 @@ public class Constants {
 
     // URL setting - ServiceGenerator
     public static final String LOCAL_URL = "http://10.10.0.58:9090/api/";
-    public static final String MY_LOCAL_URL = "http://10.10.0.161:3000/api/";
     public static final String BASE_URL = "http://14.63.160.86:3000 ";
 
     // StoreListViewAdapter, StoreDetailReviewListViewAdapter, StoreDetailMenuFragment
@@ -32,11 +31,11 @@ public class Constants {
     public static final String URL_PATH_GET_STORE_INFO = "stores/{id}.json";
     public static final String URL_PATH_GET_REGIONS = "regions.json";
     public static final String URL_PATH_GET_STORE_REVIEWS = "stores/{id}/reviews.json";
-    public static final String URL_PATH_GET_TEMP_REVIEWS = "reviews.json";
+//    public static final String URL_PATH_GET_TEMP_REVIEWS = "reviews.json";
     public static final String URL_PATH_POST_REVIEW = "stores/{id}/reviews.json";
-    public static final String URL_PATH_POST_USER_SIGNUP ="users/signup.json";
-    public static final String URL_PATH_POST_USER_SIGNIN ="users/signin.json";
-    public static final String URL_PATH_POST_USER_AUTHENTICATION ="users/authentication.json";
+    public static final String URL_PATH_POST_USER_SIGNUP = "users/signup.json";
+    public static final String URL_PATH_POST_USER_SIGNIN = "users/signin.json";
+    public static final String URL_PATH_POST_USER_AUTHENTICATION = "users/authentication.json";
 
 
     public static final String PREF_NAME = "PREF";
@@ -49,5 +48,9 @@ public class Constants {
     public static final String PREF_USER_ACCESS_TOKEN = "PREF_USER_ACCESS_TOKEN";
 
     // startActivityForResult requestCode
-    public static final int REQUEST_CODE_FROM_STORE_DETAIL_REVIEW_FRAGMENT = 1;
+    public static final int REQUEST_CODE_FROM_REVIEW_LIST_TO_POST = 1;
+    public static final int REQUEST_CODE_FROM_MAIN_TO_SIGNUP = 2;
+
+    //message
+    public static final String TOAST_ERROR_MESSAGE = "잠시 후 다시 시도해 주세요";
 }

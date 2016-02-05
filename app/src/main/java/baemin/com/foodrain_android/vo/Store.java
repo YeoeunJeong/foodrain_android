@@ -8,11 +8,9 @@ public class Store implements Serializable {
     private String name;
     private String category;
     private String address;
-    private int status;
     private String start_time;
     private String end_time;
     private String holiday;
-    private String[] tag;
     private int review_count;
     private float grade_average;
     private String phone;
@@ -52,14 +50,6 @@ public class Store implements Serializable {
         this.address = address;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public String getStart_time() {
         return start_time;
     }
@@ -82,14 +72,6 @@ public class Store implements Serializable {
 
     public void setHoliday(String holiday) {
         this.holiday = holiday;
-    }
-
-    public String[] getTag() {
-        return tag;
-    }
-
-    public void setTag(String[] tag) {
-        this.tag = tag;
     }
 
     public int getReview_count() {

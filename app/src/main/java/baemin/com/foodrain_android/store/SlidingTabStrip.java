@@ -36,7 +36,7 @@ public class SlidingTabStrip extends LinearLayout {
     //ye
 //    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = R.color.colorAccent;
 //    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF33B5E5;
-    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFFF28515;
+    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFFFFFFFF;
 
     private final int mBottomBorderThickness;
     private final Paint mBottomBorderPaint;

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,7 @@ public class RegionSettingActivity extends AppCompatActivity {
     EditText regionEt;
 
     @Bind(R.id.region_no_result)
-    TextView noResultTv;
+    RelativeLayout noResultLayout;
 
     @Bind(R.id.region_listview)
     ListView listView;
@@ -96,11 +97,11 @@ public class RegionSettingActivity extends AppCompatActivity {
             }
 
             if (mRegions.size() == 0) {
-                noResultTv.setVisibility(View.VISIBLE);
+                noResultLayout.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.GONE);
                 regionEt.setText("");
             } else {
-                noResultTv.setVisibility(View.GONE);
+                noResultLayout.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
                 listView.setAdapter(new RegionListViewAdapter(RegionSettingActivity.this, mRegions));
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -176,8 +177,10 @@ public class RegionSettingActivity extends AppCompatActivity {
                         mRegion.getAddress(),
                         mRegion.getLocation().getLongitude(),
                         mRegion.getLocation().getLatitude());
+                Toast.makeText(RegionSettingActivity.this, "위치를 설정하였습니다", Toast.LENGTH_SHORT).show();
+                finish();
             } else {
-                Toast.makeText(RegionSettingActivity.this, "서버 - 주소를 보내지 못함", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegionSettingActivity.this, Constants.TOAST_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }
 

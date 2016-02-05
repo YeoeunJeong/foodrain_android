@@ -30,7 +30,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'org.apache.commons:commons-lang3:3.4'
-//    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.google.android.gms:play-services-location:8.4.0'
 
 // https://github.com/ogaclejapan/SmartTabLayout
 //    compile 'com.ogaclejapan.smarttablayout:library:1.6.0@aar'

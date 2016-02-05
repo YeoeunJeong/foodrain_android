@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="baemin.com.foodrain_android.store.StoreDetailActivity">
 
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/store_detail_toolbar"
         android:layout_width="match_parent"
@@ -105,9 +104,7 @@
             android:id="@+id/store_detail_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            app:tabIndicatorColor="@color/colorAccent" />
-
+            android:background="@color/colorPrimary" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/store_detail_viewpager"

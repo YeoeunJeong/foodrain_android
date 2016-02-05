@@ -31,11 +31,11 @@
             android:gravity="end"
             android:paddingBottom="2dp"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:paddingTop="2dp"
             android:textColor="@color/colorWhite"
-            tools:text="서울시 송파구 석촌동" />
+            android:visibility="gone"
+            tools:text="서울시 송파구 석촌동"
+            tools:visibility="visible" />
 
         <GridView
             android:id="@+id/content_main_gv_category"

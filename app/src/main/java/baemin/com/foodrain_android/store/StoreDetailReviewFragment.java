@@ -2,7 +2,6 @@ package baemin.com.foodrain_android.store;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +89,6 @@ public class StoreDetailReviewFragment extends Fragment {
 
     private void requestReviews(int storeId, int page) {
         mIsRequesting = true;
-        Toast.makeText(mActivity, page + "페이지 로딩", Toast.LENGTH_SHORT).show();
         ReviewService reviewService = ServiceGenerator.getInstance().getReviewService();
         Call<Reviews> reviewsCall = reviewService.getReviews(storeId, page);
         reviewsCall.enqueue(mCallBack);
@@ -148,12 +145,6 @@ public class StoreDetailReviewFragment extends Fragment {
         return mIsRequesting;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        ButterKnife.unbind(this);
-    }
-
     @OnClick(R.id.store_detail_review_btn)
     public void mOnClick(View v) {
         if (v.getId() == R.id.store_detail_review_btn) {
@@ -162,7 +153,7 @@ public class StoreDetailReviewFragment extends Fragment {
             if (!accessToken.equals("null")) {
                 Intent intent = new Intent(mActivity, StoreReviewActivity.class);
                 intent.putExtra(Constants.STORE_ID, mStoreId);
-                startActivityForResult(intent, Constants.REQUEST_CODE_FROM_STORE_DETAIL_REVIEW_FRAGMENT);
+                startActivityForResult(intent, Constants.REQUEST_CODE_FROM_REVIEW_LIST_TO_POST);
             } else {
                 new AlertDialog.Builder(mActivity)
                         .setMessage("로그인해주세요")
@@ -182,7 +173,7 @@ public class StoreDetailReviewFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_CODE_FROM_STORE_DETAIL_REVIEW_FRAGMENT) {
+        if (requestCode == Constants.REQUEST_CODE_FROM_REVIEW_LIST_TO_POST) {
             if (resultCode == mActivity.RESULT_OK) {
                 requestReviews(mStoreId, mPage);
             } else if (resultCode == mActivity.RESULT_CANCELED) {
@@ -190,4 +181,11 @@ public class StoreDetailReviewFragment extends Fragment {
             }
         }
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ButterKnife.unbind(this);
+    }
+
 }

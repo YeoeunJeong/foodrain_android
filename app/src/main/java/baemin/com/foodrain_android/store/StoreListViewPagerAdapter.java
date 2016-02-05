@@ -21,7 +21,7 @@ public class StoreListViewPagerAdapter extends FragmentPagerAdapter {
         int i = 0;
         for (Category category : categories) {
             mTabTitles[i] = category.getName();
-            mFragment[i++] = new StoreListFragment().newInstance(category.getId());
+            mFragment[i++] = StoreListFragment.newInstance(category.getId());
         }
     }
 

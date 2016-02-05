@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity
     private String mAccesToken;
     private EditText mEmailEt;
     private EditText mPasswordEt;
+    private TextView mSignInCheckTv;
 
     @Bind(R.id.main_toolbar)
     Toolbar toolbar;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity
 
     @Bind(R.id.main_test_in_content_main_xml)
     TextView regionTv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,8 @@ public class MainActivity extends AppCompatActivity
 
         mEmailEt = (EditText) mHeaderView.findViewById(R.id.nav_email_et);
         mPasswordEt = (EditText) mHeaderView.findViewById(R.id.nav_pw_et);
+        mSignInCheckTv = (TextView) mHeaderView.findViewById(R.id.nav_check_tv);
+        mSignInCheckTv.setVisibility(View.INVISIBLE);
 
         TextView signUpBtn = (TextView) mHeaderView.findViewById(R.id.nav_sign_up_tv);
         signUpBtn.setOnClickListener(mSignUpOnClick);
@@ -118,6 +122,19 @@ public class MainActivity extends AppCompatActivity
             navigationView.removeHeaderView(mHeaderView);
         }
         mHeaderView = navigationView.inflateHeaderView(R.layout.nav_after_sign_in);
+        TextView emailTv = (TextView) mHeaderView.findViewById(R.id.nav_email_tv);
+        TextView nicknameTv = (TextView) mHeaderView.findViewById(R.id.nav_nickname_tv);
+
+        emailTv.setText(SharedPreference.getInstance(MainActivity.this)
+                .getStringPreference(Constants.PREF_USER_EMAIL));
+
+        String nickname = SharedPreference.getInstance(MainActivity.this)
+                .getStringPreference(Constants.PREF_USER_NICKNAME);
+        if (!nickname.equals("null")) {
+            nicknameTv.setText(SharedPreference.getInstance(MainActivity.this).getStringPreference(Constants.PREF_USER_EMAIL));
+        } else {
+            nicknameTv.setVisibility(View.INVISIBLE);
+        }
         TextView signOutBtn = (TextView) mHeaderView.findViewById(R.id.nav_sign_out_btn_tv);
         signOutBtn.setOnClickListener(mSignOutOnClick);
     }
@@ -126,7 +143,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, Constants.REQUEST_CODE_FROM_MAIN_TO_SIGNUP);
         }
     };
 
@@ -142,7 +159,6 @@ public class MainActivity extends AppCompatActivity
         UserService userService = ServiceGenerator.getInstance().getUserService();
         Call<UserWithAccessToken> userWithAccessTokenCall = userService.signIn(email, password);
         userWithAccessTokenCall.enqueue(mUserCallback);
-
     }
 
     private Callback<UserWithAccessToken> mUserCallback = new Callback<UserWithAccessToken>() {
@@ -155,6 +171,8 @@ public class MainActivity extends AppCompatActivity
                         .putStringPreference(Constants.PREF_USER_ACCESS_TOKEN, mUserWithAccessToken.getAccess_token());
                 onBackPressed();
                 Toast.makeText(MainActivity.this, "로그인 하였습니다", Toast.LENGTH_SHORT).show();
+            } else {
+                mSignInCheckTv.setVisibility(View.VISIBLE);
             }
         }
 
@@ -169,6 +187,9 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(View v) {
             SharedPreference.getInstance(MainActivity.this).removePreference(Constants.PREF_USER_ACCESS_TOKEN);
+            SharedPreference.getInstance(MainActivity.this).removePreference(Constants.PREF_USER_EMAIL);
+            SharedPreference.getInstance(MainActivity.this).removePreference(Constants.PREF_USER_NICKNAME);
+
             setBeforeSigninNavigationDrawer();
             onBackPressed();
             Toast.makeText(MainActivity.this, "로그아웃 하였습니다", Toast.LENGTH_SHORT).show();
@@ -179,8 +200,9 @@ public class MainActivity extends AppCompatActivity
         boolean result = false;
 
         if (StringUtils.isWhitespace(email) || StringUtils.isWhitespace(password)) {
-            Toast.makeText(MainActivity.this, "이메일 또는 패스워드를 확인해주세요", Toast.LENGTH_SHORT).show();
+            mSignInCheckTv.setVisibility(View.VISIBLE);
         } else {
+            mSignInCheckTv.setVisibility(View.INVISIBLE);
             result = true;
         }
 
@@ -235,9 +257,6 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onFailure(Throwable t) {
-//            if (isFinishing()) {
-//                return;
-//            }
             new AlertDialog.Builder(MainActivity.this)
                     .setMessage("서버 연결 실패. 다시 시도해 주십시오")
                     .setPositiveButton("확인", null)
@@ -253,7 +272,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -273,7 +291,6 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -294,6 +311,20 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_CODE_FROM_MAIN_TO_SIGNUP) {
+            if (resultCode == MainActivity.RESULT_OK) {
+                setAfterSigninNavigationDrawer();
+                onBackPressed();
+            } else if (resultCode == MainActivity.RESULT_CANCELED) {
+                setBeforeSigninNavigationDrawer();
+                onBackPressed();
+            }
+        }
     }
 
     @Override

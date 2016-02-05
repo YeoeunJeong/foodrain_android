@@ -46,9 +46,14 @@ public class StoreListViewAdapter extends FRBaseAdapter<Store> {
         if (list.get(position).getImages().size() != 0) {
             Log.i("position", "" + position);
 
-            ImageGenerator.getInstance().createImageService(list.get(position).getImages().get(0).getUrl(), holder.storeIv);
+            ImageGenerator.getInstance().createImageService(
+                    list.get(position).getImages().get(0).getUrl(), holder.storeIv);
+//       ImageGenerator.getInstance().createImageService(
+//                    list.get(position).getImages().get(0).getUrl(), holder.storeIv, 0, holder.storeIv.getHeight());
         } else {
-            holder.storeIv.setImageResource(R.drawable.ready);
+//            holder.storeIv.setImageResource(R.drawable.ready);
+            ImageGenerator.getInstance().createImageService(
+                    null, holder.storeIv);
         }
 
         return convertView;

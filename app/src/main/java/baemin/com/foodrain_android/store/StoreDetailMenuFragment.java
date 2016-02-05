@@ -20,6 +20,7 @@ import baemin.com.foodrain_android.R;
 import baemin.com.foodrain_android.network.ImageGenerator;
 import baemin.com.foodrain_android.network.ServiceGenerator;
 import baemin.com.foodrain_android.util.Constants;
+import baemin.com.foodrain_android.util.WindowSize;
 import baemin.com.foodrain_android.vo.Image;
 import baemin.com.foodrain_android.vo.Menu;
 import baemin.com.foodrain_android.vo.Store;
@@ -31,6 +32,7 @@ public class StoreDetailMenuFragment extends Fragment {
     private Store mStore;
     private List<Menu> mMenus;
 
+    private int width;
     @Bind(R.id.store_detail_menu_layout)
     LinearLayout menuLayout;
 
@@ -58,15 +60,24 @@ public class StoreDetailMenuFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mActivity = getActivity();
+        width = new WindowSize(mActivity).getWindowWidth();
 
         if (mMenus.size() == 0) {
-            TextView noticeTv = new TextView(getContext());
-            noticeTv.setText("메뉴 이미지 준비중입니다. 개봉박두!");
-            noticeTv.setLayoutParams(
+            ImageView noticeIv = new ImageView(getContext());
+            noticeIv.setImageResource(R.drawable.ready_menu);
+            noticeIv.setLayoutParams(
                     new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT));
-            menuLayout.addView(noticeTv);
+            menuLayout.addView(noticeIv);
+
+//            TextView noticeTv = new TextView(getContext());
+//            noticeTv.setText("메뉴 이미지 준비중입니다. 개봉박두!");
+//            noticeTv.setLayoutParams(
+//                    new LinearLayout.LayoutParams(
+//                            LinearLayout.LayoutParams.WRAP_CONTENT,
+//                            LinearLayout.LayoutParams.WRAP_CONTENT));
+//            menuLayout.addView(noticeTv);
         } else {
             for (Menu menu : mMenus) {
                 addMenuImage(menu);
@@ -75,16 +86,30 @@ public class StoreDetailMenuFragment extends Fragment {
         return view;
     }
 
+    @Bind(R.id.store_detail_menu_iv)
+    ImageView stdMenuIv;
+
     private void addMenuImage(Menu menu) {
         ImageView menuIv = new ImageView(getContext());
 
+//        ImageGenerator.getInstance().createMenuImageService(menu.getUrl(), stdMenuIv);
         menuIv.setLayoutParams(
                 new ViewGroup.LayoutParams(
-//                        700, 700
+////                        700, 700
+//                        ((View) getView().getParent()).getWidth(),
+//                        ((View) getView().getParent()).getHeight()
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 ));
-        ImageGenerator.getInstance().createImageService(menu.getUrl(), menuIv);
+//        ImageGenerator.getInstance().createImageService(menu.getUrl(), menuIv);
+        ImageGenerator.getInstance().createMenuImageService(width, menu.getUrl(), menuIv);
+//        ImageGenerator.getInstance().createImageService(menu.getUrl(), menuIv, ((View) getView().getParent()).getWidth(), 0);
         menuLayout.addView(menuIv);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ButterKnife.unbind(this);
     }
 }

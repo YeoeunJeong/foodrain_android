@@ -1,5 +1,7 @@
 package baemin.com.foodrain_android.store;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -46,9 +48,11 @@ public class StoreListActivity extends AppCompatActivity {
         boolean regionCheck = SharedPreference.getInstance(this).getBooleanPreference(Constants.PREF_REGION_STATUS_KEY);
 
         if (!regionCheck) {
-            Toast.makeText(StoreListActivity.this, "위치를 지정해주세요", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(StoreListActivity.this, RegionSettingActivity.class));
-            finish();
+            new AlertDialog.Builder(StoreListActivity.this)
+                    .setMessage("매장 목록을 가져오려면 위치 설정이 필요합니다")
+                    .setPositiveButton("위치 설정하기", mDialogClickListener)
+                    .setNegativeButton("취소", mDialogClickListener)
+                    .show();
         } else {
             mLongitude = SharedPreference.getInstance(this).getDoublePreference(Constants.PREF_REGION_LONGITUDE_KEY);
             mLatitude = SharedPreference.getInstance(this).getDoublePreference(Constants.PREF_REGION_LATITUDE_KEY);
@@ -56,8 +60,17 @@ public class StoreListActivity extends AppCompatActivity {
             Intent intent = getIntent();
             setTab(intent);
         }
-
     }
+
+    private DialogInterface.OnClickListener mDialogClickListener = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            if (which == DialogInterface.BUTTON_POSITIVE) {
+                startActivity(new Intent(StoreListActivity.this, RegionSettingActivity.class));
+            }
+            finish();
+        }
+    };
+
 
     private void setActionBar() {
         setSupportActionBar(toolbar);
@@ -112,4 +125,10 @@ public class StoreListActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        if
+    }
 }
