@@ -21,8 +21,7 @@
         <activity android:name=".region.RegionSettingActivity" />
         <activity android:name=".home.SignUpActivity" />
         <activity
-            android:name=".home.LaunchActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:name=".home.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
