@@ -98,7 +98,7 @@ public class StoreDetailMenuFragment extends Fragment {
 ////                        700, 700
 //                        ((View) getView().getParent()).getWidth(),
 //                        ((View) getView().getParent()).getHeight()
-                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        width,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 ));
 //        ImageGenerator.getInstance().createImageService(menu.getUrl(), menuIv);

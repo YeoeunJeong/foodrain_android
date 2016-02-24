@@ -119,7 +119,6 @@ public class StoreDetailActivity extends AppCompatActivity {
     };
 
     private void setBottomBar(Store store) {
-        Toast.makeText(StoreDetailActivity.this, "setBottom", Toast.LENGTH_SHORT).show();
         float gradeAverage = store.getGrade_average();
         ratingBar.setRating(gradeAverage);
         gradeAverageTv.setText(String.valueOf(gradeAverage));
@@ -129,7 +128,6 @@ public class StoreDetailActivity extends AppCompatActivity {
     }
 
     private void setTab(Store store) {
-        Toast.makeText(StoreDetailActivity.this, "setTab", Toast.LENGTH_SHORT).show();
         viewPager.setAdapter(
                 new StoreDetailViewPagerAdapter(
                         getSupportFragmentManager(), store));

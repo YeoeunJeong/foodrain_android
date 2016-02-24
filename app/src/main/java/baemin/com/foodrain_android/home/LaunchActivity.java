@@ -1,6 +1,7 @@
 package baemin.com.foodrain_android.home;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -16,7 +17,8 @@ import retrofit2.Response;
 
 public class LaunchActivity extends AppCompatActivity {
     private AccessToken mAccessToken;
-//    private GoogleApiClient mGoogleApiClient;
+    //    private GoogleApiClient mGoogleApiClient;
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +27,19 @@ public class LaunchActivity extends AppCompatActivity {
 
         removeRegionPreferences();
         requestUpdateAccessToken();
+        mHandler.postDelayed(mUpdateTimeTask, 1000);
 
-        Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
-        startActivity(intent);
 
-        finish();
     }
+
+    private Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    };
+
 
     private void removeRegionPreferences() {
         SharedPreference

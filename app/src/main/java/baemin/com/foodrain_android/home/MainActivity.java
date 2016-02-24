@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity
             setAfterSigninNavigationDrawer();
         }
         requestCategoryList();
+      //   setKeyboardHide();
     }
 
     private void setActionBar() {
@@ -96,6 +97,11 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    private void setKeyboardHide() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
     }
 
     private void setBeforeSigninNavigationDrawer() {
@@ -282,15 +288,6 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_notice) {
-        } else if (id == R.id.nav_reviews) {
-        } else if (id == R.id.nav_favorites) {
-            Intent intent = new Intent(MainActivity.this, StoreReviewActivity.class);
-            startActivity(intent);
-        }
-
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
