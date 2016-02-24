@@ -30,7 +30,7 @@ public class ImageGenerator {
         Picasso.with(view.getContext())
                 .load(Constants.IMAGE_URL + url)
                 .placeholder(R.drawable.ready)
-                .error(R.drawable.ready)
+                .error(R.drawable.ready_image)
                 .fit().centerCrop()
                 .into(view);
     }
@@ -39,11 +39,9 @@ public class ImageGenerator {
         // 4096
         Picasso.with(view.getContext())
                 .load(Constants.IMAGE_URL + url)
-                .placeholder(R.drawable.ready)
-                .error(R.drawable.ready)
+                .placeholder(R.drawable.ready_transperant)
+                .error(R.drawable.ready_menu)
                 .resize(width, 0)
-                .centerInside()
-                .onlyScaleDown()
                 .into(view);
     }
 

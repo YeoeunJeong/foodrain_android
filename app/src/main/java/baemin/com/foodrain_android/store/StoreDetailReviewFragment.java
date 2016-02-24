@@ -104,6 +104,7 @@ public class StoreDetailReviewFragment extends Fragment {
                 mReviewList.addAll(mReviews.getRows());
                 listView.setAdapter(mReviewListAdapter);
             } else {
+                mReviewList.clear();;
                 mReviewList.addAll(mReviews.getRows());
                 mReviewListAdapter.notifyDataSetChanged();
             }
@@ -158,15 +159,7 @@ public class StoreDetailReviewFragment extends Fragment {
                 new AlertDialog.Builder(mActivity)
                         .setMessage("로그인해주세요")
                         .setPositiveButton("확인", null)
-//                        .setPositiveButton("로그인하러가기", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                mActivity.finish();
-//                                //
-//                            }
-//                        })
-//                        .setNegativeButton("취소", null)
                         .show();
-
             }
         }
     }

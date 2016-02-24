@@ -24,6 +24,7 @@ import baemin.com.foodrain_android.R;
 import baemin.com.foodrain_android.network.RegionService;
 import baemin.com.foodrain_android.network.ServiceGenerator;
 import baemin.com.foodrain_android.util.Constants;
+import baemin.com.foodrain_android.util.GpsInfo;
 import baemin.com.foodrain_android.util.SharedPreference;
 import baemin.com.foodrain_android.vo.Region;
 import butterknife.Bind;
@@ -37,6 +38,7 @@ public class RegionSettingActivity extends AppCompatActivity {
     private ActionBar mActionBar;
     private List<Region> mRegions;
     private Region mRegion;
+    private GpsInfo mGpsInfo;
 
     @Bind(R.id.region_toolbar)
     Toolbar toolbar;
@@ -136,14 +138,16 @@ public class RegionSettingActivity extends AppCompatActivity {
         if (id == R.id.action_get_location_icon) {
             double longitude, latitude;
 
-            if (getCurrentLocation() != null) {
-                longitude = getCurrentLocation().getLongitude();
-                latitude = getCurrentLocation().getLatitude();
-
-                requestRegionSetting(longitude, latitude);
-            } else {
-                Toast.makeText(RegionSettingActivity.this, "GPS - 현재 위치를 받아오지 못했습니다", Toast.LENGTH_SHORT).show();
-            }
+            showGPSDialog();
+//            Log.i("location", "" + mGpsInfo.getLocation().getLatitude() + ", " + mGpsInfo.getLocation().getLongitude());
+//            if (getCurrentLocation() != null) {
+//                longitude = getCurrentLocation().getLongitude();
+//                latitude = getCurrentLocation().getLatitude();
+//
+////                requestRegionSetting(longitude, latitude);
+//            } else {
+//                Toast.makeText(RegionSettingActivity.this, "GPS - 현재 위치를 받아오지 못했습니다", Toast.LENGTH_SHORT).show();
+//            }
 
             return true;
         }
@@ -172,7 +176,6 @@ public class RegionSettingActivity extends AppCompatActivity {
             mRegion = mRegions.get(0);
 
             if (mRegion != null) {
-                Toast.makeText(RegionSettingActivity.this, mRegion.getAddress(), Toast.LENGTH_SHORT).show();
                 setRegionSharedPreferences(
                         mRegion.getAddress(),
                         mRegion.getLocation().getLongitude(),
@@ -215,4 +218,17 @@ public class RegionSettingActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
     }
 
+    public void showGPSDialog() {
+        // set gps
+        mGpsInfo = new GpsInfo(RegionSettingActivity.this);
+        if (mGpsInfo.isGetLocation()) {
+            Log.i("longitude", "" + mGpsInfo.getLongitude() + ", " + mGpsInfo.getLatitude());
+            SharedPreference.getInstance(RegionSettingActivity.this).putDoublePreference(Constants.PREF_REGION_LONGITUDE_KEY, mGpsInfo.getLongitude());
+            SharedPreference.getInstance(RegionSettingActivity.this).putDoublePreference(Constants.PREF_REGION_LATITUDE_KEY, mGpsInfo.getLatitude());
+            requestRegionSetting(mGpsInfo.getLongitude(), mGpsInfo.getLatitude());
+        } else {
+            mGpsInfo.showSettingsAlert();
+        }
+
+    }
 }
